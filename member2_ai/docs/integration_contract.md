@@ -2,13 +2,13 @@
 
 
 
-\*\*Owner:\*\* Member 2 — AI/ML and Risk Scoring
+\*\*Owner:\*\* Member 2 — AI/ML and Risk Scoring  
 
-\*\*Version:\*\* 1.0
+\*\*Version:\*\* 1.0  
 
-\*\*Status:\*\* Initial prototype contract
+\*\*Status:\*\* Initial prototype contract  
 
-\*\*Scoring method:\*\* Rule-based
+\*\*Scoring method:\*\* Rule-based  
 
 \*\*Data mode:\*\* Synthetic only
 
@@ -241,3 +241,4 @@ The current test suite contains 11 automated tests, including checks for missing
 
 
 The latest recorded test run passed all 11 tests. Re-run the test suite after any code or configuration changes.
+
