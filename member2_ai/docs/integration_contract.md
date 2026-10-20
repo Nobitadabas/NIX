@@ -1,20 +1,20 @@
-\# TRUSTRAIL AI — Risk Scoring Integration Contract
+# TRUSTRAIL AI — Risk Scoring Integration Contract
 
 
 
-\*\*Owner:\*\* Member 2 — AI/ML and Risk Scoring  
+**Owner:** Member 2 — AI/ML and Risk Scoring
 
-\*\*Version:\*\* 1.0  
+**Version:** 1.0
 
-\*\*Status:\*\* Initial prototype contract  
+**Status:** Initial prototype contract
 
-\*\*Scoring method:\*\* Rule-based  
+**Scoring method:** Rule-based
 
-\*\*Data mode:\*\* Synthetic only
+**Data mode:** Synthetic only
 
 
 
-\## 1. Purpose
+## 1. Purpose
 
 
 
@@ -26,7 +26,7 @@ The score is intended to prioritise transactions for human review. It is not a p
 
 
 
-\## 2. Input
+## 2. Input
 
 
 
@@ -38,7 +38,7 @@ The scorer accepts one transaction as a Python dictionary with these fields:
 
 |---|---|
 
-| transaction\_id | string |
+| transaction_id | string |
 
 | timestamp | ISO 8601 datetime string |
 
@@ -48,27 +48,27 @@ The scorer accepts one transaction as a Python dictionary with these fields:
 
 | channel | string |
 
-| merchant\_category | string |
+| merchant_category | string |
 
-| account\_age\_days | non-negative integer |
+| account_age_days | non-negative integer |
 
-| transactions\_last\_hour | non-negative integer |
+| transactions_last_hour | non-negative integer |
 
-| amount\_deviation | finite, non-negative number |
+| amount_deviation | finite, non-negative number |
 
-| device\_change | boolean |
+| device_change | boolean |
 
-| location\_change | boolean |
+| location_change | boolean |
 
-| prior\_declines | non-negative integer |
+| prior_declines | non-negative integer |
 
-| scenario\_type | string |
+| scenario_type | string |
 
-| data\_mode | string; must be SYNTHETIC |
+| data_mode | string; must be SYNTHETIC |
 
 
 
-\## 3. Example Input
+## 3. Example Input
 
 
 
@@ -76,33 +76,33 @@ The scorer accepts one transaction as a Python dictionary with these fields:
 
 {
 
-&#x20; "transaction\_id": "TXN-0001",
+  "transaction_id": "TXN-0001",
 
-&#x20; "timestamp": "2026-10-20T10:00:00",
+  "timestamp": "2026-10-20T10:00:00",
 
-&#x20; "amount": 450.0,
+  "amount": 450.0,
 
-&#x20; "currency": "INR",
+  "currency": "INR",
 
-&#x20; "channel": "UPI",
+  "channel": "UPI",
 
-&#x20; "merchant\_category": "Groceries",
+  "merchant_category": "Groceries",
 
-&#x20; "account\_age\_days": 850,
+  "account_age_days": 850,
 
-&#x20; "transactions\_last\_hour": 1,
+  "transactions_last_hour": 1,
 
-&#x20; "amount\_deviation": 0.4,
+  "amount_deviation": 0.4,
 
-&#x20; "device\_change": false,
+  "device_change": false,
 
-&#x20; "location\_change": false,
+  "location_change": false,
 
-&#x20; "prior\_declines": 0,
+  "prior_declines": 0,
 
-&#x20; "scenario\_type": "ordinary",
+  "scenario_type": "ordinary",
 
-&#x20; "data\_mode": "SYNTHETIC"
+  "data_mode": "SYNTHETIC"
 
 }
 
@@ -110,7 +110,7 @@ The scorer accepts one transaction as a Python dictionary with these fields:
 
 
 
-\## 4. Successful Response
+## 4. Successful Response
 
 
 
@@ -118,23 +118,23 @@ The scorer returns a dictionary containing:
 
 
 
-\- `transaction\_id`: transaction identifier
+- `transaction_id`: transaction identifier
 
-\- `risk\_score`: integer from 0 to 100
+- `risk_score`: integer from 0 to 100
 
-\- `risk\_level`: LOW, MEDIUM, HIGH, or CRITICAL
+- `risk_level`: LOW, MEDIUM, HIGH, or CRITICAL
 
-\- `score\_type`: RULE\_BASED
+- `score_type`: RULE_BASED
 
-\- `reasons`: list of triggered rules
+- `reasons`: list of triggered rules
 
-\- `scoring\_version`: configured version
+- `scoring_version`: configured version
 
-\- `data\_mode`: SYNTHETIC
+- `data_mode`: SYNTHETIC
 
-\- `validation\_errors`: empty list when validation succeeds
+- `validation_errors`: empty list when validation succeeds
 
-\- `review\_guidance`: guidance for a human reviewer
+- `review_guidance`: guidance for a human reviewer
 
 
 
@@ -142,13 +142,13 @@ Each triggered reason contains:
 
 
 
-\- `rule\_id`
+- `rule_id`
 
-\- `title`
+- `title`
 
-\- `explanation`
+- `explanation`
 
-\- `points`
+- `points`
 
 
 
@@ -156,31 +156,24 @@ The score is capped at the configured maximum.
 
 
 
-\## 5. Validation Failure Response
+## 5. Validation Failure Response
+
+If required fields are missing or invalid, the scorer returns a dictionary containing:
+
+- `transaction_id`: the supplied transaction identifier, if available; otherwise `null`
+- `risk_score`: `null`
+- `risk_level`: `UNASSESSED`
+- `score_type`: the configured score type
+- `reasons`: an empty list
+- `scoring_version`: the configured scoring version
+- `data_mode`: the supplied data mode, if available; otherwise `UNKNOWN`
+- `validation_errors`: a list of validation messages
+- `review_guidance`: instruction to correct or verify the input data before assessing risk
+
+The backend must not treat an unassessed transaction as LOW risk. It should check `validation_errors` and `risk_score` before using the assessment.
 
 
-
-If required fields are missing or invalid, the scorer returns:
-
-
-
-\- `risk\_score`: null
-
-\- `risk\_level`: UNASSESSED
-
-\- `reasons`: empty list
-
-\- `validation\_errors`: list of validation messages
-
-\- `review\_guidance`: instruction to correct or verify the input
-
-
-
-The backend must not treat an unassessed transaction as LOW risk.
-
-
-
-\## 6. Python Integration Example
+## 6. Python Integration Example
 
 
 
@@ -190,13 +183,13 @@ The backend can call the scorer directly from Python:
 
 ```python
 
-from src.risk\_scorer import RiskScorer
+from src.risk_scorer import RiskScorer
 
 
 
 scorer = RiskScorer()
 
-result = scorer.score\_transaction(transaction)
+result = scorer.score_transaction(transaction)
 
 ```
 
@@ -206,33 +199,33 @@ Here, `transaction` must be a dictionary matching the input contract.
 
 
 
-The backend should inspect `result\["validation\_errors"]` and `result\["risk\_score"]` before treating the assessment as successful.
+The backend should inspect `result["validation_errors"]` and `result["risk_score"]` before treating the assessment as successful.
 
 
 
-\## 7. Integration Notes
+## 7. Integration Notes
 
 
 
-\- The current implementation accepts SYNTHETIC data only.
+- The current implementation accepts SYNTHETIC data only.
 
-\- The scorer is a Python module, not an HTTP API.
+- The scorer is a Python module, not an HTTP API.
 
-\- An API endpoint must be implemented by the backend team if the frontend needs HTTP access.
+- An API endpoint must be implemented by the backend team if the frontend needs HTTP access.
 
-\- The backend must preserve the scorer's explanations instead of inventing reasons.
+- The backend must preserve the scorer's explanations instead of inventing reasons.
 
-\- The final field names and response format should be confirmed jointly by Members 2 and 4.
+- The final field names and response format should be confirmed jointly by Members 2 and 4.
 
-\- The scoring weights and thresholds are demonstration settings, not validated production thresholds.
+- The scoring weights and thresholds are demonstration settings, not validated production thresholds.
 
-\- Synthetic scenario labels are not verified fraud labels.
+- Synthetic scenario labels are not verified fraud labels.
 
-\- A human reviewer must make the final decision.
+- A human reviewer must make the final decision.
 
 
 
-\## 8. Current Verification
+## 8. Current Verification
 
 
 
@@ -241,4 +234,3 @@ The current test suite contains 11 automated tests, including checks for missing
 
 
 The latest recorded test run passed all 11 tests. Re-run the test suite after any code or configuration changes.
-

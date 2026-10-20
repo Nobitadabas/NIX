@@ -1,8 +1,8 @@
-\# TRUSTRAIL AI — Transaction Data Dictionary
+# TRUSTRAIL AI — Transaction Data Dictionary
 
 
 
-\## 1. Purpose
+## 1. Purpose
 
 
 
@@ -18,7 +18,7 @@ All initial test data will be synthetic.
 
 
 
-\## 2. Transaction Input Schema
+## 2. Transaction Input Schema
 
 
 
@@ -56,29 +56,22 @@ All initial test data will be synthetic.
 
 
 
-\## 3. Validation Rules
+## 3. Validation Rules
 
 
 
-\- Transaction ID must not be empty.
-
-\- Amount must be numeric and non-negative.
-
-\- Account age, transaction count, and prior declines must be non-negative integers.
-
-\- Device and location change indicators must be Boolean values.
-
-\- Missing or invalid values must be reported explicitly.
-
-\- Missing information must not silently be treated as normal behaviour.
-
-\- Unknown categorical values must be handled explicitly.
-
-\- Synthetic scenario labels must not be presented as verified real-world fraud labels.
+* Transaction ID must not be empty.
+* Amount must be numeric and non-negative.
+* Account age, transaction count, and prior declines must be non-negative integers.
+* Device and location change indicators must be Boolean values.
+* Missing or invalid values must be reported explicitly.
+* Missing information must not silently be treated as normal behaviour.
+* Unknown categorical values must be handled explicitly.
+* Synthetic scenario labels must not be presented as verified real-world fraud labels.
 
 
 
-\## 4. Planned Risk-Scoring Output
+## 4. Planned Risk-Scoring Output
 
 
 
@@ -86,19 +79,13 @@ The initial output fields are:
 
 
 
-\- transaction\_id
-
-\- risk\_score
-
-\- risk\_level
-
-\- score\_type
-
-\- reasons
-
-\- scoring\_version
-
-\- data\_mode
+* transaction\_id
+* risk\_score
+* risk\_level
+* score\_type
+* reasons
+* scoring\_version
+* data\_mode
 
 
 
@@ -106,16 +93,12 @@ The exact output contract must be confirmed with Member 4 before integration.
 
 
 
-\## 5. Important Notes
+## 5. Important Notes
 
 
 
-\- The meaning and threshold of amount\_deviation must be defined before scoring.
-
-\- The observation window for prior\_declines must be agreed upon.
-
-\- The allowed channel, merchant category, and scenario values must be documented.
-
-\- Do not use real customer information, bank account numbers, card numbers, or credentials.
-
-\- The initial scorer will use transparent rules rather than an unvalidated machine-learning model.
+* The meaning and threshold of amount\_deviation must be defined before scoring.
+* The observation window for prior\_declines must be agreed upon.
+* The allowed channel, merchant category, and scenario values must be documented.
+* Do not use real customer information, bank account numbers, card numbers, or credentials.
+* The initial scorer will use transparent rules rather than an unvalidated machine-learning model.
