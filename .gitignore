@@ -1,0 +1,29 @@
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and coverage artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Local environment and secrets
+.env
+.env.*
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated evaluation and assessment reports
+member2_ai/data/evaluation_report.json
+member2_ai/data/risk_assessment_report.json

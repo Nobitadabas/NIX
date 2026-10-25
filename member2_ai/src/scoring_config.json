@@ -1,0 +1,73 @@
+{
+  "scoring_version": "1.1.0",
+  "score_type": "RULE_BASED",
+  "maximum_score": 100,
+  "risk_levels": {
+    "LOW": {
+      "min_score": 0,
+      "max_score": 29
+    },
+    "MEDIUM": {
+      "min_score": 30,
+      "max_score": 59
+    },
+    "HIGH": {
+      "min_score": 60,
+      "max_score": 79
+    },
+    "CRITICAL": {
+      "min_score": 80,
+      "max_score": 100
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "R001",
+      "field": "amount_deviation",
+      "operator": "greater_than",
+      "threshold": 3.0,
+      "points": 20,
+      "title": "Unusually high transaction amount"
+    },
+    {
+      "rule_id": "R002",
+      "field": "transactions_last_hour",
+      "operator": "greater_than_or_equal",
+      "threshold": 10,
+      "points": 25,
+      "title": "High transaction velocity"
+    },
+    {
+      "rule_id": "R003",
+      "field": "device_change",
+      "operator": "equals",
+      "threshold": true,
+      "points": 10,
+      "title": "Device change detected"
+    },
+    {
+      "rule_id": "R004",
+      "field": "location_change",
+      "operator": "equals",
+      "threshold": true,
+      "points": 15,
+      "title": "Location change detected"
+    },
+    {
+      "rule_id": "R005",
+      "field": "prior_declines",
+      "operator": "greater_than_or_equal",
+      "threshold": 2,
+      "points": 10,
+      "title": "Repeated declined attempts"
+    },
+    {
+      "rule_id": "R006",
+      "field": "account_age_days",
+      "operator": "less_than",
+      "threshold": 30,
+      "points": 10,
+      "title": "Newly created account"
+    }
+  ]
+}
